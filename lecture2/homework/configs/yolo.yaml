@@ -1,5 +1,14 @@
 #需要自行将配置文件中的相机参数补全
 
+# 相机参数（枚举值见 hikrobot/include/CameraParams.h）
+camera:
+  balance_white_auto: 1   # MV_BALANCEWHITE_AUTO_CONTINUOUS 连续自动白平衡
+  exposure_auto: 0        # MV_EXPOSURE_AUTO_MODE_OFF 关闭自动曝光
+  gain_auto: 0            # MV_GAIN_MODE_OFF 关闭自动增益
+  exposure_time: 10000.0  # 曝光时间 (us)
+  gain: 20.0              # 增益 (dB)
+  frame_rate: 60.0        # 帧率 (fps)
+
 yolo_name: yolov5
 yolov5_model_path: assets/yolov5.xml
 device: CPU
