@@ -33,6 +33,12 @@ Camera::Camera() {
     }
 
     load_config();
+
+    ret = MV_CC_StartGrabbing(handle);
+    if (ret != MV_OK) {
+        std::cout << "Error starting grabbing: " << ret << std::endl;
+        return;
+    }
 }
 
 void Camera::load_config() {
@@ -49,22 +55,21 @@ void Camera::load_config() {
 
     ret = MV_CC_SetEnumValue(handle, "BalanceWhiteAuto", balance_white_auto_);
     if (ret != MV_OK) std::cout << "Failed to set BalanceWhiteAuto: " << ret << std::endl;
-    return;
+
     ret = MV_CC_SetEnumValue(handle, "ExposureAuto", exposure_auto_);
     if (ret != MV_OK) std::cout << "Failed to set ExposureAuto: " << ret << std::endl;
-    return;
+
     ret = MV_CC_SetEnumValue(handle, "GainAuto", gain_auto_);
     if (ret != MV_OK) std::cout << "Failed to set GainAuto: " << ret << std::endl;
-    return;
+
     ret = MV_CC_SetFloatValue(handle, "ExposureTime", exposure_time_);
     if (ret != MV_OK) std::cout << "Failed to set ExposureTime: " << ret << std::endl;
-    return;
+
     ret = MV_CC_SetFloatValue(handle, "Gain", gain_);
     if (ret != MV_OK) std::cout << "Failed to set Gain: " << ret << std::endl;
-    return;
+
     ret = MV_CC_SetFrameRate(handle, frame_rate_);
     if (ret != MV_OK) std::cout << "Failed to set FrameRate: " << ret << std::endl;
-    return;
 }
 
 Camera::~Camera() {
@@ -113,28 +118,23 @@ cv::Mat Camera::transfer(MV_FRAME_OUT raw) {
     return img;
 }
 
-void Camera::Camera_read() {
+cv::Mat Camera::Camera_read() {
     // Implementation for reading camera data
-    ret = MV_CC_StartGrabbing(handle);
-    if (ret != MV_OK) {
-        std::cout << "Error starting grabbing: " << ret << std::endl;
-        return;
-    }
     MV_FRAME_OUT raw;
     unsigned int nMsec = 100;
     ret = MV_CC_GetImageBuffer(handle, &raw, nMsec);
     if (ret != MV_OK) {
         std::cout << "Error getting image buffer: " << ret << std::endl;
-        return;
+        return cv::Mat();
     }
 
     cv::Mat img = transfer(raw);
-    cv::imshow("img", img);
-    cv::waitKey(0);
 
     ret = MV_CC_FreeImageBuffer(handle, &raw);
     if (ret != MV_OK) {
         std::cout << "Error freeing image buffer: " << ret << std::endl;
-        return;
+        return cv::Mat();
     }
+
+    return img;
 }

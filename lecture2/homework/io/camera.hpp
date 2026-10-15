@@ -2,11 +2,13 @@
 #define CAMERA_HPP
 
 #include "hikrobot/include/MvCameraControl.h"
+
+#include <opencv2/opencv.hpp>
 class Camera {
 public:
     Camera();
     ~Camera();
-    void Camera_read();
+    cv::Mat Camera_read();
 private:
     void * handle;
     int ret;
