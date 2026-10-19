@@ -1,0 +1,17 @@
+# AprilTag检测配置（附加题）
+auto_charge:
+  # 使用的AprilTag家族
+  tag_family: "tag36h11"
+  # AprilTag边长 (m)
+  tag_size: 0.080
+  # 需要检测的目标tag ID
+  tag_ids: [10, 18, 24]
+  # 角点精化方法: 0=NONE, 1=CORNER_REFINE_SUBPIX, 2=CORNER_REFINE_CONTOUR
+  corner_refinement_method: 1
+  # 最小周长占比（过滤太小的检测框）
+  min_marker_perimeter_rate: 0.03
+  # 自适应阈值窗口参数
+  adaptive_thresh_win_size_min: 3
+  adaptive_thresh_win_size_max: 23
+  adaptive_thresh_win_size_step: 10
+  adaptive_thresh_constant: 7.0

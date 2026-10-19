@@ -25,9 +25,9 @@ int main()
             tools::draw_text(img, info, detection.center, {0, 255, 0});
         }   
         // 显示图像
-        cv::resize(img, img , cv::Size(640, 480));
+        cv::resize(img, img, cv::Size(640, 480));
         cv::imshow("img", img);
-        if (cv::waitKey(0) == 'q') {
+        if (cv::waitKey(20) == 'q') {
             break;
         }
     }
